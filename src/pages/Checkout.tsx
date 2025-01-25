@@ -27,6 +27,26 @@ export default function App() {
     <div className="App">
       <h1>주문서</h1>
       <div id="payment-widget" />
+      <button
+          onClick={async () => {
+            const paymentWidget = paymentWidgetRef.current
+
+            try {
+              await paymentWidget?.requestPayment({
+                orderId: nanoid(),
+                orderName: "토스 티셔츠 외 2건",
+                customerName: "김토스",
+                customerEmail: "customer123@gmail.com",
+                successUrl: `${window.location.origin}/success`,
+                failUrl: `${window.location.origin}/fail`,
+            })
+            } catch (err) {
+                console.log(err)
+            }
+        }}
+      >
+        결제하기
+      </button>
     </div>
   )
 }
