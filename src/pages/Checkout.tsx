@@ -1,35 +1,32 @@
-import { useState } from 'react'
-import reactLogo from '../assets/react.svg'
-import viteLogo from '../../public/vite.svg'
-import '../App.css'
+// Checkout.tsx
 
-function CheckoutPage() {
-  const [count, setCount] = useState(0)
+import { useEffect, useRef } from "react"
+import { loadPaymentWidget, PaymentWidgetInstance } from "@tosspayments/payment-widget-sdk"
+// import { ANONYMOUS } from "@tosspayments/payment-widget-sdk"
+import { nanoid } from "nanoid"
+import "../App.css"
+
+const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm" // 공개된 테스트 키
+const customerKey = "YbX2HuSlsC9uVJW6NMRMj"
+
+export default function App() {
+  const paymentWidgetRef = useRef<PaymentWidgetInstance | null>(null)
+  const price = 50_000
+
+  useEffect(() => {
+    (async () => {
+      const paymentWidget = await loadPaymentWidget(clientKey, customerKey)
+
+      paymentWidget.renderPaymentMethods("#payment-widget", price)
+
+      paymentWidgetRef.current = paymentWidget
+    })()
+  }, [])
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="App">
+      <h1>주문서</h1>
+      <div id="payment-widget" />
+    </div>
   )
 }
-
-export default CheckoutPage
