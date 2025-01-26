@@ -1,9 +1,9 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './pages/Checkout' // default로 export한 경우, 중괄호 없음
+import App from './pages/checkout/ui/Checkout' // default로 export한 경우, 중괄호 없음
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { SuccessPage } from './pages/Success'
-import { FailPage } from './pages/Fail'
+import { SuccessPage } from './pages/checkout/ui/Success'
+import { FailPage } from './pages/checkout/ui/Fail'
 
 const router = createBrowserRouter([
   {
